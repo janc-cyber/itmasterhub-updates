@@ -1,5 +1,7 @@
 {
-  "version": "5.3.0",
-  "notas": "Prueba del sistema de actualizaciones",
-  "url": "https://github.com/janc-cyber/itmasterhub-updates/releases/download/v5.3.0/IT.Master.Hub.5.3.0.exe"
+  "version": "9.1.4",
+  "notas": "Corrige la URL de \"Mejorar plan\" (apuntaba a localhost), y ahora un cambio de plan hecho desde el panel administrativo se refleja en la app sin tener que reiniciarla.",
+  "url": "https://github.com/janc-cyber/itmasterhub-updates/releases/download/v9.1.4/IT.Master.Hub.9.1.4.exe",
+  "sha256": "8422ab9219f5c468cffc16b1e63041d05dded7c4bd629de7b407801ccbb701b7",
+  "firma": "GQFkHMNwKU48T5gskIy7TfIT2CLcQo2IirlgeEiTNvDzAE28V4jivPnmqKdco37OIppB7HFxKOxDkZ4gQw2sCw=="
 }
