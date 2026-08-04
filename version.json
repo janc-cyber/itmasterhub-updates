@@ -1,7 +1,24 @@
 {
-  "version": "9.1.4",
-  "notas": "Corrige la URL de \"Mejorar plan\" (apuntaba a localhost), y ahora un cambio de plan hecho desde el panel administrativo se refleja en la app sin tener que reiniciarla.",
-  "url": "https://github.com/janc-cyber/itmasterhub-updates/releases/download/v9.1.4/IT.Master.Hub.9.1.4.exe",
-  "sha256": "8422ab9219f5c468cffc16b1e63041d05dded7c4bd629de7b407801ccbb701b7",
-  "firma": "GQFkHMNwKU48T5gskIy7TfIT2CLcQo2IirlgeEiTNvDzAE28V4jivPnmqKdco37OIppB7HFxKOxDkZ4gQw2sCw=="
+  "version": "9.1.13",
+  "notas": "Release v9.1.13",
+  "url": "https://github.com/janc-cyber/itmasterhub-updates/releases/download/v9.1.13/IT-Master-Hub-Portable-9.1.13.exe",
+  "sha256": "3ab1255af6c8c16b73f535d7848c1a2e91493e6fb234316a4e50c6ea8a1bf79d",
+  "firma": "Rv9GB40rQAS5dY8cmICixX0OvelXArVWWtxY/krmEkm8Xhs2Z3yrJUxS7+p8bYAGfrxcS85ljmz6AgU+3E58BQ==",
+  "artefactos": {
+    "portable": {
+      "nombre": "IT-Master-Hub-Portable-9.1.13.exe",
+      "url": "https://github.com/janc-cyber/itmasterhub-updates/releases/download/v9.1.13/IT-Master-Hub-Portable-9.1.13.exe",
+      "sha256": "3ab1255af6c8c16b73f535d7848c1a2e91493e6fb234316a4e50c6ea8a1bf79d",
+      "firma": "Rv9GB40rQAS5dY8cmICixX0OvelXArVWWtxY/krmEkm8Xhs2Z3yrJUxS7+p8bYAGfrxcS85ljmz6AgU+3E58BQ==",
+      "bytes": 336093823
+    },
+    "instalador": {
+      "nombre": "IT-Master-Hub-Instalador-9.1.13.exe",
+      "url": "https://github.com/janc-cyber/itmasterhub-updates/releases/download/v9.1.13/IT-Master-Hub-Instalador-9.1.13.exe",
+      "sha256": "6e881a2bfc49c3227cc96e7ff547eafd68ccfb06c146135e5cf4943a59cef7b0",
+      "firma": "mj0cjVw7Pfe9SuFS75R+eWloD7heROIvuUjGFGC4/vFVnnmNhIW8VhQhA8qxgoAFHn8WyIBL5HdlRAFRDmvRDw==",
+      "bytes": 362960847,
+      "requiereAdmin": false
+    }
+  }
 }
