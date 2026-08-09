@@ -1,23 +1,23 @@
 {
-  "version": "9.1.21",
-  "notas": "Release v9.1.21",
-  "url": "https://github.com/janc-cyber/itmasterhub-updates/releases/download/v9.1.21/IT-Master-Hub-Portable-9.1.21.exe",
-  "sha256": "560bd2652e1a75162eecae0f8dd64db70866325470f254b06520f01e27321fff",
-  "firma": "rPPOfCiij3bbcyK4VZjzsQAwjfjMi5lA6IyBc84ekMjeOT0COu1nPh4aIAW5s55KAAqOrZdaLYBISFORIp8cBg==",
+  "version": "9.1.22",
+  "notas": "Release v9.1.22",
+  "url": "https://github.com/janc-cyber/itmasterhub-updates/releases/download/v9.1.22/IT-Master-Hub-Portable-9.1.22.exe",
+  "sha256": "c77a99c906b4838c433ce5b8bec25ca5d1079f167ac226fc602ae4cf674570fe",
+  "firma": "LA1jsTCZoWGVRFlRs6YGdyz0GBPnwvPHi1vf/wXvVWx9d1CGJv+MAcHtt/uQBLJW3Tr1s9NabDPtn4mWh8IgCQ==",
   "artefactos": {
     "portable": {
-      "nombre": "IT-Master-Hub-Portable-9.1.21.exe",
-      "url": "https://github.com/janc-cyber/itmasterhub-updates/releases/download/v9.1.21/IT-Master-Hub-Portable-9.1.21.exe",
-      "sha256": "560bd2652e1a75162eecae0f8dd64db70866325470f254b06520f01e27321fff",
-      "firma": "rPPOfCiij3bbcyK4VZjzsQAwjfjMi5lA6IyBc84ekMjeOT0COu1nPh4aIAW5s55KAAqOrZdaLYBISFORIp8cBg==",
-      "bytes": 342658723
+      "nombre": "IT-Master-Hub-Portable-9.1.22.exe",
+      "url": "https://github.com/janc-cyber/itmasterhub-updates/releases/download/v9.1.22/IT-Master-Hub-Portable-9.1.22.exe",
+      "sha256": "c77a99c906b4838c433ce5b8bec25ca5d1079f167ac226fc602ae4cf674570fe",
+      "firma": "LA1jsTCZoWGVRFlRs6YGdyz0GBPnwvPHi1vf/wXvVWx9d1CGJv+MAcHtt/uQBLJW3Tr1s9NabDPtn4mWh8IgCQ==",
+      "bytes": 342647619
     },
     "instalador": {
-      "nombre": "IT-Master-Hub-Instalador-9.1.21.exe",
-      "url": "https://github.com/janc-cyber/itmasterhub-updates/releases/download/v9.1.21/IT-Master-Hub-Instalador-9.1.21.exe",
-      "sha256": "5a59df2cea6463c3d535bb1a25d30d513da79267843b807a4eaccd2585a68501",
-      "firma": "TlDz5vT00fLNMHLZ4AuGqH6mAzc3wgVdHUA4PEnUtxg65IwUwzgBrXBAN4PFkiwQ/hlxFe+j+hcW4OZYnUTZAQ==",
-      "bytes": 369525744,
+      "nombre": "IT-Master-Hub-Instalador-9.1.22.exe",
+      "url": "https://github.com/janc-cyber/itmasterhub-updates/releases/download/v9.1.22/IT-Master-Hub-Instalador-9.1.22.exe",
+      "sha256": "4f6c22f56af64d5f7983bd9d43b1cce6b67afb49a3565510e2ba9a05d77bd6b3",
+      "firma": "vzOfBWi2nXbo6bAGMsUW+gYQB1VdFHErV5KDgKrq0DTTDMZzlNXn2vFHGtx5J1i49d1eGnULaxOeN1vZ09IbAw==",
+      "bytes": 369514644,
       "requiereAdmin": false
     }
   }
