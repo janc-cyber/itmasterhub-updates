@@ -1,0 +1,398 @@
+{
+  "version": 1,
+  "actualizado": "2026-11-23",
+  "comandos": [
+    {
+      "id": "f_route",
+      "cat": "Red",
+      "admin": false,
+      "nombre": "Tabla de enrutamiento",
+      "desc": "Muestra las rutas de red del equipo (a dónde se envía cada destino).",
+      "cmd": "Get-NetRoute -AddressFamily IPv4 | Sort-Object RouteMetric | Format-Table DestinationPrefix,NextHop,RouteMetric,InterfaceAlias -AutoSize"
+    },
+    {
+      "id": "f_tcpconn",
+      "cat": "Red",
+      "admin": false,
+      "nombre": "Conexiones activas con su proceso",
+      "desc": "Lista las conexiones TCP establecidas y qué proceso las abrió.",
+      "cmd": "Get-NetTCPConnection -State Established | Select-Object LocalAddress,LocalPort,RemoteAddress,RemotePort,OwningProcess | Sort-Object RemoteAddress | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_listen",
+      "cat": "Red",
+      "admin": false,
+      "nombre": "Puertos en escucha",
+      "desc": "Muestra en qué puertos está escuchando el equipo y qué proceso.",
+      "cmd": "Get-NetTCPConnection -State Listen | Select-Object LocalAddress,LocalPort,OwningProcess | Sort-Object LocalPort | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_fwinbound",
+      "cat": "Red",
+      "admin": false,
+      "nombre": "Reglas de firewall de entrada activas",
+      "desc": "Lista las reglas de firewall de entrada habilitadas.",
+      "cmd": "Get-NetFirewallRule -Direction Inbound -Enabled True | Select-Object DisplayName,Action | Select-Object -First 40 | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_ipv4",
+      "cat": "Red",
+      "admin": false,
+      "nombre": "Direcciones IPv4 por adaptador",
+      "desc": "Muestra la IP y la máscara de cada adaptador.",
+      "cmd": "Get-NetIPAddress -AddressFamily IPv4 | Select-Object InterfaceAlias,IPAddress,PrefixLength | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_neigh",
+      "cat": "Red",
+      "admin": false,
+      "nombre": "Vecinos de red (ARP detallado)",
+      "desc": "Dispositivos vistos en la red local con su estado.",
+      "cmd": "Get-NetNeighbor -AddressFamily IPv4 | Where-Object State -ne 'Unreachable' | Select-Object IPAddress,LinkLayerAddress,State | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_arpflush",
+      "cat": "Red",
+      "admin": true,
+      "nombre": "Vaciar caché ARP",
+      "desc": "Borra la tabla ARP (resuelve problemas de conexión a equipos de la red local).",
+      "cmd": "netsh interface ip delete arpcache; 'Caché ARP vaciada'"
+    },
+    {
+      "id": "f_latency",
+      "cat": "Red",
+      "admin": false,
+      "nombre": "Latencia a destinos clave",
+      "desc": "Mide la latencia a Cloudflare, Google y un dominio.",
+      "cmd": "'1.1.1.1','8.8.8.8','google.com' | ForEach-Object { Test-Connection $_ -Count 2 -ErrorAction SilentlyContinue | Measure-Object ResponseTime -Average | Select-Object @{n='Destino';e={$_}},Average }"
+    },
+    {
+      "id": "f_dnscache",
+      "cat": "Red",
+      "admin": false,
+      "nombre": "Ver caché DNS",
+      "desc": "Muestra los nombres resueltos guardados en caché.",
+      "cmd": "Get-DnsClientCache | Select-Object Entry,Data | Select-Object -First 40 | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_uptime",
+      "cat": "Sistema",
+      "admin": false,
+      "nombre": "Tiempo encendido (uptime)",
+      "desc": "Cuánto lleva prendido el equipo desde el último arranque.",
+      "cmd": "(Get-Date) - (Get-CimInstance Win32_OperatingSystem).LastBootUpTime"
+    },
+    {
+      "id": "f_winver",
+      "cat": "Sistema",
+      "admin": false,
+      "nombre": "Versión de Windows",
+      "desc": "Nombre, versión y número de compilación de Windows.",
+      "cmd": "Get-ComputerInfo -Property OsName,OsVersion,WindowsVersion,OsBuildNumber"
+    },
+    {
+      "id": "f_syserr",
+      "cat": "Sistema",
+      "admin": false,
+      "nombre": "Últimos errores del sistema",
+      "desc": "Los 20 errores/críticos más recientes del registro del sistema.",
+      "cmd": "Get-WinEvent -FilterHashtable @{LogName='System';Level=1,2} -MaxEvents 20 -ErrorAction SilentlyContinue | Format-Table TimeCreated,Id,ProviderName -AutoSize"
+    },
+    {
+      "id": "f_startup",
+      "cat": "Sistema",
+      "admin": false,
+      "nombre": "Programas de inicio",
+      "desc": "Qué se ejecuta al iniciar sesión (causa común de lentitud).",
+      "cmd": "Get-CimInstance Win32_StartupCommand | Select-Object Name,Command,Location | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_topram",
+      "cat": "Sistema",
+      "admin": false,
+      "nombre": "Procesos que más RAM usan",
+      "desc": "Los 15 procesos con mayor uso de memoria.",
+      "cmd": "Get-Process | Sort-Object WorkingSet -Descending | Select-Object -First 15 Name,Id,@{n='RAM(MB)';e={[math]::Round($_.WorkingSet/1MB)}} | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_serial",
+      "cat": "Sistema",
+      "admin": false,
+      "nombre": "Número de serie del equipo",
+      "desc": "Serial del equipo (útil para inventario y garantía).",
+      "cmd": "Get-CimInstance Win32_BIOS | Select-Object Manufacturer,SerialNumber,SMBIOSBIOSVersion"
+    },
+    {
+      "id": "f_tz",
+      "cat": "Sistema",
+      "admin": false,
+      "nombre": "Zona horaria",
+      "desc": "Zona horaria configurada en el equipo.",
+      "cmd": "Get-TimeZone"
+    },
+    {
+      "id": "f_activacion",
+      "cat": "Sistema",
+      "admin": false,
+      "nombre": "Estado de activación de Windows",
+      "desc": "Si Windows está activado (LicenseStatus 1 = activado).",
+      "cmd": "Get-CimInstance SoftwareLicensingProduct -Filter 'PartialProductKey IS NOT NULL' | Where-Object { $_.Name -like 'Windows*' } | Select-Object Name,LicenseStatus"
+    },
+    {
+      "id": "f_env",
+      "cat": "Sistema",
+      "admin": false,
+      "nombre": "Variables de entorno",
+      "desc": "Lista las variables de entorno del equipo.",
+      "cmd": "Get-ChildItem Env: | Sort-Object Name | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_volumes",
+      "cat": "Discos",
+      "admin": false,
+      "nombre": "Volúmenes con espacio y salud",
+      "desc": "Letra, etiqueta, sistema de archivos, salud y espacio de cada volumen.",
+      "cmd": "Get-Volume | Select-Object DriveLetter,FileSystemLabel,FileSystem,HealthStatus,@{n='Libre(GB)';e={[math]::Round($_.SizeRemaining/1GB)}},@{n='Total(GB)';e={[math]::Round($_.Size/1GB)}} | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_smart",
+      "cat": "Discos",
+      "admin": false,
+      "nombre": "Fiabilidad SMART detallada",
+      "desc": "Desgaste, errores y temperatura de cada disco físico.",
+      "cmd": "Get-PhysicalDisk | Get-StorageReliabilityCounter | Select-Object DeviceId,Wear,ReadErrorsTotal,Temperature | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_tempsize",
+      "cat": "Discos",
+      "admin": false,
+      "nombre": "Tamaño de archivos temporales",
+      "desc": "Cuánto ocupan los temporales del usuario (en MB).",
+      "cmd": "[math]::Round((Get-ChildItem $env:TEMP -Recurse -File -ErrorAction SilentlyContinue | Measure-Object Length -Sum).Sum/1MB,1)"
+    },
+    {
+      "id": "f_repairscan",
+      "cat": "Discos",
+      "admin": true,
+      "nombre": "Revisar volumen C: (solo escaneo)",
+      "desc": "Escanea C: en busca de errores sin modificar nada.",
+      "cmd": "Repair-Volume -DriveLetter C -Scan"
+    },
+    {
+      "id": "f_bigfolders",
+      "cat": "Discos",
+      "admin": false,
+      "nombre": "Carpetas más grandes en C:",
+      "desc": "Las 12 carpetas de primer nivel que más ocupan en C:.",
+      "cmd": "Get-ChildItem C:\\ -Directory -ErrorAction SilentlyContinue | ForEach-Object { [pscustomobject]@{ Carpeta=$_.Name; 'GB'=[math]::Round((Get-ChildItem $_.FullName -Recurse -File -ErrorAction SilentlyContinue | Measure-Object Length -Sum).Sum/1GB,2) } } | Sort-Object GB -Descending | Select-Object -First 12 | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_svcstopped",
+      "cat": "Servicios",
+      "admin": false,
+      "nombre": "Servicios automáticos detenidos",
+      "desc": "Servicios que deberían iniciar solos pero están parados.",
+      "cmd": "Get-Service | Where-Object { $_.StartType -eq 'Automatic' -and $_.Status -ne 'Running' } | Select-Object Name,DisplayName,Status | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_svckey",
+      "cat": "Servicios",
+      "admin": false,
+      "nombre": "Estado de servicios clave",
+      "desc": "Estado de spooler, DHCP, DNS, Windows Update y BITS.",
+      "cmd": "Get-Service Spooler,Dhcp,Dnscache,wuauserv,BITS -ErrorAction SilentlyContinue | Select-Object Name,Status,StartType | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_restartwu",
+      "cat": "Servicios",
+      "admin": true,
+      "nombre": "Reiniciar Windows Update",
+      "desc": "Reinicia el servicio de actualizaciones (destraba descargas atascadas).",
+      "cmd": "Restart-Service wuauserv -Force; 'Windows Update reiniciado'"
+    },
+    {
+      "id": "f_restartaudio",
+      "cat": "Servicios",
+      "admin": true,
+      "nombre": "Reiniciar servicio de audio",
+      "desc": "Reinicia el servicio de audio (resuelve el sonido que se corta).",
+      "cmd": "Restart-Service Audiosrv -Force; 'Audio reiniciado'"
+    },
+    {
+      "id": "f_topcpu",
+      "cat": "Procesos",
+      "admin": false,
+      "nombre": "Procesos que más CPU consumen",
+      "desc": "Los 15 procesos con mayor uso de CPU acumulado.",
+      "cmd": "Get-Process | Sort-Object CPU -Descending | Select-Object -First 15 Name,Id,CPU | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_procpath",
+      "cat": "Procesos",
+      "admin": false,
+      "nombre": "Procesos con su ubicación en disco",
+      "desc": "Ruta del ejecutable de cada proceso (detecta procesos sospechosos).",
+      "cmd": "Get-Process | Where-Object Path | Select-Object Name,Id,Path | Sort-Object Name | Select-Object -First 40 | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_localusers",
+      "cat": "Usuarios",
+      "admin": false,
+      "nombre": "Usuarios locales",
+      "desc": "Cuentas locales del equipo y si están habilitadas.",
+      "cmd": "Get-LocalUser | Select-Object Name,Enabled,LastLogon | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_admins",
+      "cat": "Usuarios",
+      "admin": false,
+      "nombre": "Miembros de Administradores",
+      "desc": "Quién tiene permisos de administrador local.",
+      "cmd": "(Get-LocalGroupMember -Group 'Administradores' -ErrorAction SilentlyContinue) + (Get-LocalGroupMember -Group 'Administrators' -ErrorAction SilentlyContinue) | Select-Object Name,PrincipalSource"
+    },
+    {
+      "id": "f_sessions",
+      "cat": "Usuarios",
+      "admin": false,
+      "nombre": "Sesiones de usuario activas",
+      "desc": "Usuarios con sesión iniciada en el equipo.",
+      "cmd": "query user"
+    },
+    {
+      "id": "f_whoami",
+      "cat": "Usuarios",
+      "admin": false,
+      "nombre": "Mi usuario y grupos",
+      "desc": "Usuario actual y a qué grupos pertenece.",
+      "cmd": "whoami /groups"
+    },
+    {
+      "id": "f_defender",
+      "cat": "Seguridad",
+      "admin": false,
+      "nombre": "Estado de Windows Defender",
+      "desc": "Si la protección en tiempo real está activa y cuándo se actualizó.",
+      "cmd": "Get-MpComputerStatus | Select-Object AMServiceEnabled,RealTimeProtectionEnabled,AntivirusSignatureLastUpdated,QuickScanAge"
+    },
+    {
+      "id": "f_updatesig",
+      "cat": "Seguridad",
+      "admin": true,
+      "nombre": "Actualizar firmas de Defender",
+      "desc": "Descarga las firmas de antivirus más recientes.",
+      "cmd": "Update-MpSignature; 'Firmas de Defender actualizadas'"
+    },
+    {
+      "id": "f_fwprofile",
+      "cat": "Seguridad",
+      "admin": false,
+      "nombre": "Firewall por perfil",
+      "desc": "Si el firewall está activo en los perfiles Dominio/Privado/Público.",
+      "cmd": "Get-NetFirewallProfile | Select-Object Name,Enabled | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_bitlocker",
+      "cat": "Seguridad",
+      "admin": false,
+      "nombre": "Estado de BitLocker",
+      "desc": "Si los volúmenes están cifrados con BitLocker.",
+      "cmd": "Get-BitLockerVolume -ErrorAction SilentlyContinue | Select-Object MountPoint,VolumeStatus,ProtectionStatus | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_hotfix",
+      "cat": "Seguridad",
+      "admin": false,
+      "nombre": "Últimos parches instalados",
+      "desc": "Las 15 actualizaciones de Windows instaladas más recientes.",
+      "cmd": "Get-HotFix | Sort-Object InstalledOn -Descending | Select-Object -First 15 HotFixID,Description,InstalledOn | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_prnports",
+      "cat": "Impresoras",
+      "admin": false,
+      "nombre": "Puertos de impresora",
+      "desc": "Puertos configurados y la IP de las impresoras de red.",
+      "cmd": "Get-PrinterPort | Select-Object Name,PrinterHostAddress | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_prndrivers",
+      "cat": "Impresoras",
+      "admin": false,
+      "nombre": "Drivers de impresora",
+      "desc": "Controladores de impresora instalados.",
+      "cmd": "Get-PrinterDriver | Select-Object Name,Manufacturer | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_prndefault",
+      "cat": "Impresoras",
+      "admin": false,
+      "nombre": "Impresora predeterminada",
+      "desc": "Cuál es la impresora por defecto del equipo.",
+      "cmd": "Get-CimInstance Win32_Printer | Where-Object Default | Select-Object Name,PortName"
+    },
+    {
+      "id": "f_sfc",
+      "cat": "Mantenimiento",
+      "admin": true,
+      "nombre": "Reparar archivos del sistema (sfc)",
+      "desc": "Busca y repara archivos de sistema dañados.",
+      "cmd": "sfc /scannow"
+    },
+    {
+      "id": "f_dismscan",
+      "cat": "Mantenimiento",
+      "admin": true,
+      "nombre": "Revisar imagen de Windows (DISM)",
+      "desc": "Verifica la integridad del almacén de componentes sin modificar.",
+      "cmd": "DISM /Online /Cleanup-Image /ScanHealth"
+    },
+    {
+      "id": "f_dismrestore",
+      "cat": "Mantenimiento",
+      "admin": true,
+      "nombre": "Reparar imagen de Windows (DISM)",
+      "desc": "Repara el almacén de componentes de Windows.",
+      "cmd": "DISM /Online /Cleanup-Image /RestoreHealth"
+    },
+    {
+      "id": "f_analyzestore",
+      "cat": "Mantenimiento",
+      "admin": true,
+      "nombre": "Analizar tamaño de WinSxS",
+      "desc": "Cuánto ocupa el almacén de componentes y si se puede limpiar.",
+      "cmd": "Dism /Online /Cleanup-Image /AnalyzeComponentStore"
+    },
+    {
+      "id": "f_wureset",
+      "cat": "Mantenimiento",
+      "admin": false,
+      "nombre": "Reset de caché de Microsoft Store",
+      "desc": "Limpia la caché de la Store (resuelve apps que no actualizan).",
+      "cmd": "wsreset.exe"
+    },
+    {
+      "id": "f_bigfiles",
+      "cat": "Archivos",
+      "admin": false,
+      "nombre": "Buscar archivos de más de 1 GB",
+      "desc": "Encuentra los archivos más grandes en C: (libera espacio).",
+      "cmd": "Get-ChildItem C:\\ -Recurse -File -ErrorAction SilentlyContinue | Where-Object { $_.Length -gt 1GB } | Sort-Object Length -Descending | Select-Object FullName,@{n='GB';e={[math]::Round($_.Length/1GB,2)}} -First 20 | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_downloads",
+      "cat": "Archivos",
+      "admin": false,
+      "nombre": "Descargas recientes",
+      "desc": "Archivos modificados hoy en la carpeta Descargas.",
+      "cmd": "Get-ChildItem \"$env:USERPROFILE\\Downloads\" -ErrorAction SilentlyContinue | Where-Object { $_.LastWriteTime -gt (Get-Date).Date } | Select-Object Name,Length,LastWriteTime | Format-Table -AutoSize"
+    },
+    {
+      "id": "f_hash",
+      "cat": "Archivos",
+      "admin": false,
+      "nombre": "Hash SHA-256 de un archivo",
+      "desc": "Calcula el hash de un archivo (edita la ruta). Verifica integridad.",
+      "cmd": "Get-FileHash 'C:\\ruta\\al\\archivo.ext' -Algorithm SHA256"
+    }
+  ]
+}
